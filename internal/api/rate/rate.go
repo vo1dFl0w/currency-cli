@@ -15,22 +15,22 @@ type CurrencyRateResponse struct {
 	ConversionRates map[string]float64 `json:"conversion_rates"`
 }
 
-func GetCurrencyRate(currencyID string) (*CurrencyRateResponse, error) {
+func GetCurrencyRate(currencyCode string) (*CurrencyRateResponse, error) {
 	apiKey := os.Getenv("EXCHANGERATE_API_KEY")
 	if apiKey == "" {
 		return nil, fmt.Errorf("EXCHANGERATE_API_KEY not set")
 	}
 
-	url := fmt.Sprintf("%s/%s/latest/%s", baseURL, apiKey, currencyID)
+	url := fmt.Sprintf("%s/%s/latest/%s", baseURL, apiKey, currencyCode)
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("request error: %v", err)
+		return nil, fmt.Errorf("request error: %w", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("response error: %s", resp.Status)
+		return nil, fmt.Errorf("response error: %v", resp.Status)
 	}
 
 	data, err := io.ReadAll(resp.Body)

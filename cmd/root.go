@@ -15,10 +15,10 @@ func RootCmd() *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use:   "currency",
 		Short: "Currency CLI shows the current exchange rate of the currency.",
-		Long: `Currency CLI is a simple tool to get currency rate or convert currency using currency identifier..
+		Long: `Currency CLI is a simple tool to get currency rate or convert currency using currency identifier.
 		Example:
-				currency rate --currency
-				currency convert --form=EUR --to=USD
+			currency rate --currency
+			currency convert --from=EUR --to=USD
 		`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if showVersion {
@@ -30,4 +30,8 @@ func RootCmd() *cobra.Command {
 	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "Shows")
 
 	return rootCmd
+}
+
+func Execute(rootCmd *cobra.Command) {
+	cobra.CheckErr(rootCmd.Execute())
 }

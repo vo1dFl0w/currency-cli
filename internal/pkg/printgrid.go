@@ -8,7 +8,7 @@ func PrintGrid(data map[string]float64) {
 	pairs := make([]struct{ ID, Text string}, 0, len(data))
 	maxWidth := 0
 	for id, rate := range data {
-		text := fmt.Sprintf("'%s': %.2f", id, rate)
+		text := fmt.Sprintf("'%s': %.4f", id, rate)
 		if w := len(text); w > maxWidth {
 			maxWidth = w
 		}
