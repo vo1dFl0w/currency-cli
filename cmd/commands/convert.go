@@ -24,7 +24,7 @@ var convertCmd = &cobra.Command{
 
 		switch {
 		case value != "":
-			logger.Info("Trying to convert %f %s to %s", fromCurrency, toCurrency, value)
+			logger.Info("Trying to convert %s %s to %s", value, fromCurrency, toCurrency)
 		default:
 			logger.Info("Trying to convert %s to %s", fromCurrency, toCurrency)
 		}
