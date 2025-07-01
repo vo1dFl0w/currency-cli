@@ -1,4 +1,4 @@
-package convert
+package exchange
 
 import (
 	"encoding/json"
@@ -14,7 +14,7 @@ type ConvertResponse struct {
 	ConversionRate float64 `json:"conversion_rate"`
 }
 
-var baseURL =  "https://v6.exchangerate-api.com/v6"
+var convertURL =  "https://v6.exchangerate-api.com/v6"
 
 func Convert(fromCurrency, toCurrency string) (*ConvertResponse, error) {
 	apiKey := os.Getenv("EXCHANGERATE_API_KEY")
@@ -22,7 +22,7 @@ func Convert(fromCurrency, toCurrency string) (*ConvertResponse, error) {
 		return nil, fmt.Errorf("EXCHANGERATE_API_KEY not set")
 	}
 
-	url := fmt.Sprintf("%s/%s/pair/%s/%s", baseURL, apiKey, fromCurrency, toCurrency)
+	url := fmt.Sprintf("%s/%s/pair/%s/%s", convertURL, apiKey, fromCurrency, toCurrency)
 
 	resp, err := http.Get(url)
 	if err != nil {

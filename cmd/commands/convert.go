@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/currency-cli/internal/api/convert"
-	"github.com/currency-cli/internal/logger"
+	"github.com/currency-cli/internal/api/exchange"
 	"github.com/spf13/cobra"
 )
 
@@ -18,21 +17,20 @@ var convertCmd = &cobra.Command{
 	Short: "Convert allows you to get the exchange rate of a certain currency in relation to another or get the result of currency conversion.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if fromCurrency == "" || toCurrency == "" {
-			fmt.Println("[" + ColorBlue + "INFO" + ColorReset + "] " + "Specify the base and target codes using the --from -to flags.")
+			fmt.Println("Specify the base and target codes using the --from -to flags.")
 			return
 		}
 
 		switch {
 		case value != "":
-			logger.Info("Trying to convert %s %s to %s", value, fromCurrency, toCurrency)
+			Log.Info("Trying to convert %s %s to %s", value, fromCurrency, toCurrency)
 		default:
-			logger.Info("Trying to convert %s to %s", fromCurrency, toCurrency)
+			Log.Info("Trying to convert %s to %s", fromCurrency, toCurrency)
 		}
 
-		data, err := convert.Convert(fromCurrency, toCurrency)
+		data, err := exchange.Convert(fromCurrency, toCurrency)
 		if err != nil {
-			logger.Error("API error: %v", err)
-			fmt.Printf("[" + ColorRed + "ERROR" + ColorReset + "] " + "Error getting convertion result.\n")
+			Log.Error("API error: %v", err)
 			return
 		}
 
@@ -40,8 +38,7 @@ var convertCmd = &cobra.Command{
 		case value != "":
 			v, err := strconv.ParseFloat(value, 64)
 			if err != nil {
-				logger.Error("Cannot convert value '%s' to float64: %s", value, err)
-				fmt.Printf("Wrong value expression: %s\n", value)
+				Log.Error("Cannot convert value '%s' to float64: %s", value, err)
 				return
 			}
 			fmt.Printf("Base code: %s\nTarget code: %s\nConversion rate:%.4f\n", data.BaseCode, data.TargetCode, data.ConversionRate*v)

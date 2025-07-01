@@ -1,8 +1,21 @@
 package commands
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/currency-cli/internal/logger"
+	"github.com/spf13/cobra"
+)
 
-func Init(rootCmd *cobra.Command) {
+const (
+	ColorReset  = "\033[0m"
+	ColorBlue   = "\033[36m"
+	ColorRed    = "\033[31m"
+	ColorYellow = "\033[33m"
+)
+
+var Log logger.Logger
+
+func Init(rootCmd *cobra.Command, l logger.Logger) {
+	Log = l
 	currencyCmd.Flags().StringVarP(&currencyCode, "currency", "c", "", "Currency ID")
 
 	convertCmd.Flags().StringVarP(&fromCurrency, "from", "f", "", "Initial currency")

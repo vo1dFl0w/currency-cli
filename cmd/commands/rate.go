@@ -3,16 +3,9 @@ package commands
 import (
 	"fmt"
 
-	"github.com/currency-cli/internal/api/rate"
-	"github.com/currency-cli/internal/logger"
+	"github.com/currency-cli/internal/api/exchange"
 	"github.com/currency-cli/internal/pkg"
 	"github.com/spf13/cobra"
-)
-
-const (
-	ColorReset = "\033[0m"
-	ColorBlue  = "\033[36m"
-	ColorRed   = "\033[31m"
 )
 
 var currencyCode string
@@ -22,16 +15,15 @@ var currencyCmd = &cobra.Command{
 	Short: "Rate allows you to get a list of exchange rates.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if currencyCode == "" {
-			fmt.Println("["+ColorBlue+"INFO"+ColorReset+"] "+"Specify the currency ID with the --currency or -c flag.")
+			fmt.Println("Specify the currency code with the --currency or -c flag.")
 			return
 		}
 
-		logger.Info("Trying to get currency rate with currency_id: %s", currencyCode)
+		Log.Info("Trying to get currency rate with currency code: %s\n", currencyCode)
 
-		data, err := rate.GetCurrencyRate(currencyCode)
+		data, err := exchange.GetCurrencyRate(currencyCode)
 		if err != nil {
-			logger.Error("API error: %v", err)
-			fmt.Printf("["+ColorRed+"ERROR"+ColorReset+"] "+"Error getting currency rate.\n")
+			Log.Error("API error: %v", err)
 			return
 		}
 

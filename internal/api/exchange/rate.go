@@ -1,4 +1,4 @@
-package rate
+package exchange
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var baseURL = "https://v6.exchangerate-api.com/v6"
+var rateURL = "https://v6.exchangerate-api.com/v6"
 
 type CurrencyRateResponse struct {
 	BaseCode        string `json:"base_code"`
@@ -21,7 +21,7 @@ func GetCurrencyRate(currencyCode string) (*CurrencyRateResponse, error) {
 		return nil, fmt.Errorf("EXCHANGERATE_API_KEY not set")
 	}
 
-	url := fmt.Sprintf("%s/%s/latest/%s", baseURL, apiKey, currencyCode)
+	url := fmt.Sprintf("%s/%s/latest/%s", rateURL, apiKey, currencyCode)
 
 	resp, err := http.Get(url)
 	if err != nil {

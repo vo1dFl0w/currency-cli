@@ -7,8 +7,9 @@ import (
 )
 
 var (
-	version     = "v2.0.0"
+	version     = "v3.0.0"
 	showVersion bool
+	VerboseFlag bool
 )
 
 func RootCmd() *cobra.Command {
@@ -27,7 +28,8 @@ func RootCmd() *cobra.Command {
 		},
 	}
 
-	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "Shows")
+	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "Show app version")
+	rootCmd.PersistentFlags().BoolVar(&VerboseFlag, "verbose", false, "Enable vebose output")
 
 	return rootCmd
 }
